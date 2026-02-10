@@ -1,0 +1,119 @@
+---
+layout: base.njk
+title: Publications
+permalink: /publications/
+---
+<div class="container px-4 px-lg-5">
+  <h1 class="mb-4">Publications</h1>
+
+  {% if publications.error %}
+    <div class="alert alert-danger">{{ publications.error }}</div>
+  {% endif %}
+
+  {% for y in publications.years %}
+    <h2 class="h4 mt-4">{{ y.year }}</h2>
+    <ul class="list-unstyled pubs">
+      {% for p in y.items %}
+        <li class="pub-row {% if loop.index0 % 2 == 1 %}pub-alt{% endif %}">
+          <div class="pub-cite">{{ p.citation }}</div>
+          <div class="text-muted small mt-1">
+            {% if p.url %}<a href="{{ p.url }}">Publisher</a>{% endif %}
+            {% if p.doi %}{% if p.url %} · {% endif %}<a href="https://doi.org/{{ p.doi }}">DOI</a>{% endif %}
+            {% if p.arxiv %}{% if p.url or p.doi %} · {% endif %}<a href="https://arxiv.org/abs/{{ p.arxiv }}">arXiv</a>{% endif %}
+            {% if p.bibtex %}{% if p.url or p.doi or p.arxiv %} · {% endif %}
+              <!--<a href="/bib/{{ p.key }}.bib" download>BibTeX</a>-->
+              <a href="#"
+                class="bibtex-link"
+                data-bs-toggle="modal"
+                data-bs-target="#bibtexModal"
+                data-key="{{ p.key }}"
+                data-bibtex="{{ p.bibtex | escape }}">
+                BibTeX
+              </a>
+
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>   
+  {% endfor %}
+</div>
+
+<div class="modal fade" id="bibtexModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">BibTeX</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <textarea id="bibtexText"
+                  class="form-control"
+                  rows="12"
+                  readonly
+                  style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;"></textarea>
+
+        <div class="d-flex gap-2 mt-3">
+          <button id="copyBibtex" type="button" class="btn btn-primary">Copy</button>
+          <a id="downloadBibtex" class="btn btn-outline-secondary" href="#" download>Download .bib</a>
+        </div>
+
+        <div id="copyStatus" class="small mt-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const modalEl = document.getElementById("bibtexModal");
+    const bibtexText = document.getElementById("bibtexText");
+    const downloadLink = document.getElementById("downloadBibtex");
+    const copyBtn = document.getElementById("copyBibtex");
+    const copyStatus = document.getElementById("copyStatus");
+
+    // When a BibTeX link is clicked, populate the modal.
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest(".bibtex-link");
+      if (!a) return;
+
+      e.preventDefault();
+
+      const key = a.getAttribute("data-key");
+      const bibtex = a.getAttribute("data-bibtex") || "";
+
+      bibtexText.value = bibtex;
+      downloadLink.href = `/bib/${key}.bib`;
+      copyStatus.textContent = "";
+      setTimeout(() => bibtexText.select(), 50);
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(bibtexText.value);
+        copyStatus.textContent = "Copied to clipboard.";
+      } catch (err) {
+        // Fallback
+        bibtexText.focus();
+        bibtexText.select();
+        document.execCommand("copy");
+        copyStatus.textContent = "Copied to clipboard.";
+      }
+    });
+
+    // Clear on close (optional)
+    modalEl?.addEventListener("hidden.bs.modal", () => {
+      bibtexText.value = "";
+      downloadLink.href = "#";
+      copyStatus.textContent = "";
+    });
+  })();
+</script>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+  crossorigin="anonymous">
+</script>
+

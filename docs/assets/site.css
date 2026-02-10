@@ -1,0 +1,115 @@
+:root {
+  --ut-burnt-orange: #BF5700;
+}
+
+
+/* Base text */
+a {
+  color: var(--ut-burnt-orange);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--ut-burnt-orange);
+  text-decoration: underline;
+}
+
+body {
+  color: #000;          /* near-black, not pure black */
+  font-weight: 400;
+  padding-top: 3rem; /* match navbar height */
+}
+
+/* Paragraphs and lists */
+p, li {
+  color: #000;
+}
+
+.text-secondary,
+.text-muted {
+  color: #000 !important;
+}
+
+/* Headings (optional tightening) */
+h1, h2, h3, h4, h5 {
+  color: #000;
+}
+
+.masthead {
+  background-image: none !important;
+  background-color: #fff;
+  min-height: auto;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+}
+
+.lead {
+  font-weight: 400;
+}
+
+.container {
+  max-width: 1100px;
+}
+
+/* --- Navbar color reset --- */
+
+#mainNav,
+#mainNav .navbar-collapse {
+  background-color: #fff !important;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  transition: padding 0.2s ease;
+}
+
+#mainNav .navbar-brand,
+#mainNav .nav-link {
+  color: #000 !important;
+}
+
+#mainNav .nav-link:hover,
+#mainNav .nav-link:focus {
+  color: #000 !important;
+}
+
+#mainNav .navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 1rem;
+}
+
+#mainNav .nav-link {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.pub-citation {
+  line-height: 1.35;
+}
+
+.pub-links a {
+  text-decoration: none;
+}
+
+.pub-links a:hover {
+  text-decoration: underline;
+}
+
+.pubs .pub-row{
+  padding: .75rem .9rem;
+  border-radius: .5rem;
+}
+
+.pubs .pub-row.pub-alt{
+  background: rgba(0,0,0,.1); /* tweak darker/lighter */
+}
+
+/* optional: keep it clean on very small screens */
+@media (max-width: 576px){
+  .pubs .pub-row.pub-alt{ background: transparent; }
+  .pubs .pub-row{ padding: .65rem 0; border-radius: 0; }
+}
+
+#page-content {
+  padding-top: 0.75rem; /* tweak to taste */
+}

@@ -1,0 +1,10 @@
+---
+layout: null
+pagination:
+  data: publications.all
+  size: 1
+  alias: entry
+permalink: "bib/{{ entry.key }}.bib"
+eleventyExcludeFromCollections: true
+---
+{{ entry.bibtex | safe }}
