@@ -192,6 +192,7 @@ function citeJournal(p) {
   const volno = [p.volume && `vol. ${p.volume}`, p.number && `no. ${p.number}`]
     .filter(Boolean).join(" ");
   if (volno) bits.push(volno + ",");
+  if (p.articleNumber) bits.push(`article ${p.articleNumber},`);
   if (p.pages) bits.push(`pp. ${p.pages},`);
   bits.push(`${formatDate(p)}.`);
   return bits.join(" ").replace(/\s+,/g, ",").replace(/\s+\./g, ".");
@@ -256,6 +257,7 @@ function citeGeneric(p) {
 }
 
 module.exports = () => {
+  const videos = JSON.parse(fs.readFileSync(path.join(__dirname, "videos.json"), "utf8"));
   const bibPath = path.join(__dirname, "publications.bib");
 
   if (!fs.existsSync(bibPath)) {
@@ -336,9 +338,13 @@ module.exports = () => {
         volume,
         number,
         pages,
+        articleNumber: stripBraces(tags.articlenumber),
         address,
         doi,
         url,
+        urlLabel: /\.pdf(?:$|[?#])/i.test(url) ? "Paper" : "Publisher",
+        videos: videos.filter(v => (v.paperKeys || []).includes(e.citationKey))
+          .sort((a, b) => b.date.localeCompare(a.date)),
         arxiv,
         bibtex: bibtexParse.toBibtex([e]).trim(),
       };

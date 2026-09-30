@@ -1,0 +1,26 @@
+---
+layout: base.njk
+title: Media mentions
+permalink: /media-mentions/
+---
+<div class="container px-4 px-lg-5 media-page">
+  <h1>Media mentions</h1>
+  <p class="page-intro">Reporting, interviews, and institutional coverage of my work and collaborative projects. Entries identify project coverage, commentary, and republications.</p>
+  <p><a href="/media/">Watch talks and lab videos</a></p>
+  <nav class="media-jump" aria-label="Coverage by year">
+    {% for y in media.mentionYears %}<a href="#year-{{ y.year }}">{{ y.year }}</a>{% endfor %}
+    {% if media.undatedMentions.length %}<a href="#undated">Undated</a>{% endif %}
+  </nav>
+  {% for y in media.mentionYears %}
+    <section id="year-{{ y.year }}" class="mentions-year" aria-labelledby="coverage-{{ y.year }}">
+      <h2 id="coverage-{{ y.year }}">{{ y.year }}</h2>
+      <ul class="list-unstyled">{% for m in y.items %}{% include "mention-row.njk" %}{% endfor %}</ul>
+    </section>
+  {% endfor %}
+  {% if media.undatedMentions.length %}
+    <section id="undated" class="mentions-year" aria-labelledby="coverage-undated">
+      <h2 id="coverage-undated">Undated coverage</h2>
+      <ul class="list-unstyled">{% for m in media.undatedMentions %}{% include "mention-row.njk" %}{% endfor %}</ul>
+    </section>
+  {% endif %}
+</div>

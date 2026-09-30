@@ -1,0 +1,12 @@
+{% if m.linkStatus == 404 %}
+<!-- {{ m.title }}: original source returned HTTP 404, checked {{ m.linkChecked }}. Entry retained in mentions.json. -->
+{% else %}
+<li class="mention-row" id="{{ m.id }}">
+  <p class="media-meta">{% if m.displayDate %}{{ m.displayDate }} · {% endif %}{{ m.outlet }} · {{ m.kind }}</p>
+  <h3><a href="{{ m.url }}">{{ m.title }}</a></h3>
+  {# <p>{{ m.description }}</p> #}
+  {% if m.linkNote %}<p class="media-links">{{ m.linkNote }}{% if m.originalUrl %} <a href="{{ m.originalUrl }}">Original link</a>.{% endif %}</p>{% endif %}
+  {% if m.mediaId %}<p class="media-links"><a href="/media/#video-{{ m.mediaId }}">Watch embedded video</a></p>{% endif %}
+  {% if m.alternateUrl %}<p class="media-links"><a href="{{ m.alternateUrl }}">{{ m.alternateLabel }}</a></p>{% endif %}
+</li>
+{% endif %}

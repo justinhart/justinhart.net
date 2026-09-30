@@ -1,0 +1,31 @@
+---
+layout: base.njk
+title: Videos
+permalink: /media/
+---
+<div class="container px-4 px-lg-5 media-page">
+  <h1>Videos</h1>
+  <p class="page-intro">Talks, demonstrations, and videos from my research and the Living with Robots Laboratory.</p>
+  <nav class="media-jump" aria-label="Video sections">
+    {% for section in media.sections %}<a href="#{{ section.id }}">{% if section.id == 'team' %}RoboCup@Home{% elif section.id == 'lab' %}Lab videos{% elif section.id == 'research' %}Research videos{% else %}Talks{% endif %} ({{ section.items.length }})</a>{% endfor %}
+  </nav>
+  <details class="media-inventory">
+    <summary>View the complete video list ({{ media.all.length }})</summary>
+    <div class="table-responsive">
+      <table class="table">
+        <caption>Newest first; dates are labeled as event or upload dates.</caption>
+        <thead><tr><th scope="col">Date</th><th scope="col">Video</th><th scope="col">Channel</th></tr></thead>
+        <tbody>{% for v in media.all %}<tr><td>{{ v.dateKind }} {{ v.displayDate }}</td><td><a href="#video-{{ v.id }}">{{ v.title }}</a></td><td>{{ v.channel }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </details>
+  {% for section in media.sections %}
+    <section id="{{ section.id }}" class="media-section" aria-labelledby="heading-{{ section.id }}">
+      <h2 id="heading-{{ section.id }}">{{ section.title }}</h2>
+      <p>{{ section.description }} {% if section.channelUrl %}<a href="{{ section.channelUrl }}">{% if section.id == 'lab' %}Visit the lab channel{% else %}Visit the UT Austin Villa archive{% endif %}</a>.{% endif %}</p>
+      <div class="video-grid">
+        {% for v in section.items %}{% include "video-card.njk" %}{% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</div>

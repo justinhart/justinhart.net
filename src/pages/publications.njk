@@ -14,10 +14,10 @@ permalink: /publications/
     <h2 class="h4 mt-4">{{ y.year }}</h2>
     <ul class="list-unstyled pubs">
       {% for p in y.items %}
-        <li class="pub-row {% if loop.index0 % 2 == 1 %}pub-alt{% endif %}">
+        <li id="{{ p.key }}" class="pub-row {% if loop.index0 % 2 == 1 %}pub-alt{% endif %}">
           <div class="pub-cite">{{ p.citation }}</div>
           <div class="text-muted small mt-1">
-            {% if p.url %}<a href="{{ p.url }}">Publisher</a>{% endif %}
+            {% if p.url %}<a href="{{ p.url }}">{{ p.urlLabel }}</a>{% endif %}
             {% if p.doi %}{% if p.url %} · {% endif %}<a href="https://doi.org/{{ p.doi }}">DOI</a>{% endif %}
             {% if p.arxiv %}{% if p.url or p.doi %} · {% endif %}<a href="https://arxiv.org/abs/{{ p.arxiv }}">arXiv</a>{% endif %}
             {% if p.bibtex %}{% if p.url or p.doi or p.arxiv %} · {% endif %}
@@ -32,6 +32,9 @@ permalink: /publications/
               </a>
 
             {% endif %}
+            {% for v in p.videos %}
+              · <a href="{{ v.url }}" aria-label="{{ v.linkLabel }}: {{ v.title }}" title="{{ v.title }}">{{ v.linkLabel }}</a>
+            {% endfor %}
           </div>
         </li>
       {% endfor %}
@@ -110,10 +113,3 @@ permalink: /publications/
     });
   })();
 </script>
-
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-  crossorigin="anonymous">
-</script>
-

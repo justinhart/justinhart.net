@@ -1,0 +1,21 @@
+<article class="video-card" id="video-{{ v.id }}">
+  <p class="media-meta">{{ v.dateKind }} {{ v.displayDate }} · {{ v.channel }}</p>
+  <h3>{{ v.title }}</h3>
+  <p>{{ v.description }}</p>
+  {% if v.embedAllowed %}
+    <div class="video-frame">
+      <iframe src="{% if v.vimeoId %}https://player.vimeo.com/video/{{ v.vimeoId }}?dnt=1{% else %}https://www.youtube-nocookie.com/embed/{{ v.youtubeId }}{% endif %}"
+        title="{{ v.title }}" loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+  {% endif %}
+  <p class="media-links">
+    <a href="{{ v.url }}">Watch on {% if v.vimeoId %}Vimeo{% else %}YouTube{% endif %}</a>
+    {% if v.sourceUrl %} · <a href="{{ v.sourceUrl }}">Event / project</a>{% endif %}
+    {% for key in v.paperKeys %}
+      · <a href="/publications/#{{ key }}">{% if loop.length > 1 %}Related publication {{ loop.index }}{% else %}Related publication{% endif %}</a>
+    {% endfor %}
+  </p>
+</article>
