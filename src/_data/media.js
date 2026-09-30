@@ -21,10 +21,10 @@ const years = [...new Set(dated.map(m => m.date.slice(0, 4)))].sort().reverse();
 return {
   all,
   sections:[
-    {id:'talks',title:'Talks and presentations',description:'Invited talks, panels, and paper presentations. Event dates are used when known.'},
-    {id:'lab',title:'Living with Robots Laboratory',description:'All four public uploads from the LivingWithRobotsLab YouTube channel, checked September 30, 2026. Sorted by upload date.',channelUrl:'https://www.youtube.com/@LivingWithRobotsLab'},
-    {id:'research',title:'Research videos and profiles',description:'Research demonstrations and interviews, sorted by upload date.'},
-    {id:'team',title:'RoboCup@Home',description:'Qualification and competition videos from UT Austin Villa @ Home and LisTex United, sorted by upload date. Competition years appear in the titles.',channelUrl:'https://www.cs.utexas.edu/~AustinVilla/athome/'}
+    {id:'talks',title:'Talks and presentations',description:'Invited talks, panels, and paper presentations.'},
+    {id:'lab',title:'Living with Robots Laboratory',description:'Research and demonstrations from the lab’s YouTube channel.',channelUrl:'https://www.youtube.com/@LivingWithRobotsLab'},
+    {id:'research',title:'Research videos and profiles',description:'Research demonstrations, interviews, and profiles.'},
+    {id:'team',title:'RoboCup@Home',description:'Qualification and competition videos from UT Austin Villa @ Home and LisTex United.',channelUrl:'https://www.cs.utexas.edu/~AustinVilla/athome/'}
   ].map(section=>({...section,items:all.filter(v=>v.section===section.id)})),
   mentionYears:years.map(year=>({year,items:dated.filter(m=>m.date.startsWith(year))})),
   undatedMentions:mentions.filter(m=>!m.date),
