@@ -311,6 +311,7 @@
   },
   {
     "id": "found-39",
+    "showOnWebsite": false,
     "date": "2012-08-28",
     "outlet": "Gizmodo / io9",
     "title": "No, we didn’t just create a self-aware robot",

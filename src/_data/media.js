@@ -13,7 +13,8 @@ function displayDate(value) {
 }
 module.exports = () => {
 const videos = JSON.parse(fs.readFileSync(path.join(__dirname, 'videos.json'), 'utf8'));
-const mentions = JSON.parse(fs.readFileSync(path.join(__dirname, 'mentions.json'), 'utf8'));
+const mentions = JSON.parse(fs.readFileSync(path.join(__dirname, 'mentions.json'), 'utf8'))
+  .filter(m => m.showOnWebsite !== false);
 const all = videos.map(v => ({...v, displayDate:displayDate(v.date)})).sort(newestFirst);
 const dated = mentions.filter(m => m.date).map(m => ({...m, displayDate:displayDate(m.date)})).sort(newestFirst);
 const years = [...new Set(dated.map(m => m.date.slice(0, 4)))].sort().reverse();
